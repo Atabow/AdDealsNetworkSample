@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AdDealsNetworkSample"
+             x:Class="AdDealsNetworkSample.MainPage"
+             BackgroundColor="#d3d3d3"
+             Title="AdDealsNetwork Sample">
+
+  <Grid x:Name="MainGrid" BackgroundColor="Aqua">
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+      <Button x:Name="ShowAdDealsFullPageAd"
+              Text="Show Ad"
+              FontSize="40"
+              FontAttributes="Bold"
+              BackgroundColor="#4E4E4E"
+              TextColor="White"
+              BorderRadius="10"
+              Clicked="OnShowAdDealsFullPageAdClicked" />
+    </StackLayout>
+  </Grid>
+</ContentPage>
