@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdDealsNetworkSample.UWP", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdDealsNetworkSample", "AdDealsNetworkSample\AdDealsNetworkSample\AdDealsNetworkSample.csproj", "{6577D0AB-C23E-466A-8DEF-E3914EBC0DC8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC0C4F7D-521A-46C4-B446-B2C5627F68E6}"
+	ProjectSection(SolutionItems) = preProject
+		..\nuget.config = ..\nuget.config
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdDealsNetworkLib", "AdDealsNetworkLib\AdDealsNetworkLib.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
 Global

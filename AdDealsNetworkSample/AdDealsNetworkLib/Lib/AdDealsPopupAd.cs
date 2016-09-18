@@ -6,15 +6,17 @@
 
     public class AdDealsPopupAd : ContentView
     {
+        const double CloseButtonWidth = 46;
+        const double CloseButtonHeight = 46;
         const string NoAd = "http://NoAd.png"; // Note this URI does not exists 
         static Stopwatch showAdFreq = new Stopwatch();
         string adTrackingLink = string.Empty;
         string adImageUrl = string.Empty;
 
-        double aspectRatio = 1.0;
         Grid PopupGrid;
-        Grid CloseButtonGrid;
+        Frame CloseButtonFrame;
         Label CloseButton;
+        Frame AdDealsImageFrame;
         Image AdDealsImage;
         Grid root;
         bool isSDKInitialized = false;
@@ -38,14 +40,15 @@
             int adImageHeight = adDealsContent.Length > 0 ? adDealsContent[0].adimageheight : 320;
             int adImageWidth = adDealsContent.Length > 0 ? adDealsContent[0].adimagewidth : 320;
 
-            this.CloseButtonGrid = new Grid
+            this.CloseButtonFrame = new Frame
             {
-                WidthRequest = 50,
-                HeightRequest = 50,
-                Padding = 5,
+                Padding = 3,
+                WidthRequest = CloseButtonWidth,
+                HeightRequest = CloseButtonHeight,
+                OutlineColor = Color.White,
                 BackgroundColor = Color.White,
-                HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
             };
 
             this.CloseButton = new Label
@@ -61,12 +64,20 @@
                 Text = "X",
             };
 
-            CloseButtonGrid.Children.Add(this.CloseButton);
+            this.CloseButtonFrame.Content = this.CloseButton;
 
             TapGestureRecognizer tapGesture1 = new TapGestureRecognizer();
             tapGesture1.NumberOfTapsRequired = 1;
             tapGesture1.Tapped += OnCloseImageClicked;
             this.CloseButton.GestureRecognizers.Add(tapGesture1);
+
+            this.AdDealsImageFrame = new Frame
+            {
+                Padding = 3,
+                OutlineColor = Color.White,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+            };
 
             this.AdDealsImage = new Image
             {
@@ -74,11 +85,11 @@
                 {
                     Uri = new Uri(this.adImageUrl)
                 },
-                WidthRequest = adImageWidth,
-                HeightRequest = adImageHeight,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
             };
+
+            this.AdDealsImageFrame.Content = this.AdDealsImage;
 
             TapGestureRecognizer tapGesture2 = new TapGestureRecognizer();
             tapGesture2.NumberOfTapsRequired = 1;
@@ -89,45 +100,28 @@
             {
                 Children =
                 {
-                    this.AdDealsImage,
-                    this.CloseButtonGrid,
+                    this.AdDealsImageFrame,
+                    this.CloseButtonFrame,
                 },
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                Margin = 2,
+                WidthRequest = adImageWidth,
+                HeightRequest = adImageHeight,
+                BackgroundColor = Color.Transparent,
             };
 
-            var grid = new Grid
-            {
-                Children =
-                {
-                    this.PopupGrid
-                },
-                Padding = 5,
-                BackgroundColor = Color.FromHex("#FF888888"),
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
-            };
+            this.Content = this.PopupGrid;
 
-            this.Content = grid;
-            this.Content.VerticalOptions = LayoutOptions.Center;
-            this.Content.HorizontalOptions = LayoutOptions.Center;
-
+            this.AdDealsImage.SizeChanged += AdDealsImage_SizeChanged;
             this.BackgroundColor = Color.FromHex("#C0000000");
-            this.aspectRatio = adImageWidth > adImageHeight ? (double)adImageWidth / adImageHeight : (double)adImageHeight / adImageWidth;
-            this.PopupGrid.SizeChanged += AdDealsPopupAd_SizeChanged;
         }
 
-        private void AdDealsPopupAd_SizeChanged(object sender, EventArgs e)
+        private void AdDealsImage_SizeChanged(object sender, EventArgs e)
         {
-            var grid = (sender as Grid);
-
-            if (this.Width > this.Height)
+            var image = (sender as Image);
+            if (image.Width > 0 && image.Height > 0)
             {
-                grid.WidthRequest = grid.Bounds.Height * this.aspectRatio;
-            }
-            else
-            {
-                grid.HeightRequest = grid.Bounds.Width * this.aspectRatio;
+                this.CloseButtonFrame.TranslationX = image.Width / 2 - CloseButtonWidth / 2;
+                this.CloseButtonFrame.TranslationY = -1 * image.Height / 2 + CloseButtonHeight / 2;
             }
         }
 

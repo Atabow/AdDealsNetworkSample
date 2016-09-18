@@ -133,15 +133,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AdDealsNetworkLib\AdDealsNetworkLib.csproj">
-      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>AdDealsNetworkLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\AdDealsNetworkSample\AdDealsNetworkSample.csproj">
-      <Project>{6577D0AB-C23E-466A-8DEF-E3914EBC0DC8}</Project>
+      <Project>{6577d0ab-c23e-466a-8def-e3914ebc0dc8}</Project>
       <Name>AdDealsNetworkSample</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
