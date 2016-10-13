@@ -10,8 +10,8 @@
 
     public static class AdManager
     {
-        const string AppUriFormat = "http://adapi.addealsnetwork.com/addeals/rest/v2/campaigns/openapi?format=json&aid={0}&akey={1}&ctypeid={2}&advuid={3}&lang={4}&country={5}&usragent={6}&adsize={7}&testing={8}&duid={9}&conn={10}&mop={11}";
-        const string AppInitUriFormat = "http://adapi.addealsnetwork.com/addeals/tracking/add?advuid={0}&aid={1}&akey={2}&usragent={3}&oapiver=2";
+        const string AppUriFormat = "http://adapi.addealsnetwork.com/addeals/rest/v2/campaigns/openapi?format=json&aid={0}&akey={1}&ctypeid={2}&advuid={3}&lang={4}&country={5}&usragent={6}&adsize={7}&testing={8}&duid={9}&conn={10}&mop={11}&usrid={12}";
+        const string AppInitUriFormat = "http://adapi.addealsnetwork.com/addeals/tracking/add?advuid={0}&aid={1}&akey={2}&usragent={3}&oapiver=2&tech=xamarin";
 
         public static event EventHandler InitSDKSuccess;
         public static event EventHandler InitSDKFailed;
@@ -28,6 +28,7 @@
         static string duid = string.Empty;
         static string aid = string.Empty;
         static string appkey = string.Empty;
+        static int adDealsUserId = 0;
 
         static IAdvertisingIdHelper advertisingIdHelper = null;
         static IPlatformInfo platformInfo = null;
@@ -124,7 +125,7 @@
                 }
 
                 string appUri = string.Format(
-                        AppUriFormat, aid, appkey, 3, advertisingId, lang, country, userAgent, adSize, 0, duid, mconnection, mop);
+                        AppUriFormat, aid, appkey, 3, advertisingId, lang, country, userAgent, adSize, 0, duid, mconnection, mop, adDealsUserId);
                 try
                 {
                     using (HttpClient client = new HttpClient())
@@ -170,6 +171,13 @@
                         response.EnsureSuccessStatusCode();
                         sdkInitialized = true;
 
+                        string content = await response.Content.ReadAsStringAsync();
+                        if (content != "[]")
+                        {
+                            AdDealsInstallContent adDealsInstallContent = JsonConvert.DeserializeObject<AdDealsInstallContent>(content);
+                            adDealsUserId = adDealsInstallContent.usrid;
+                        }
+
                         InitSDKSuccess?.Invoke(new object(), new EventArgs());
                     }
                 }
@@ -180,8 +188,6 @@
                 }
             }
         }
-
-        
 
         public static async void SetAdvertisingId(string id)
         {
@@ -231,5 +237,14 @@
         public int adimagewidth;
         public string adimageurl;
         public string adtrackinglink;
+    }
+
+    public class AdDealsInstallContent
+    {
+        public int clkid;
+        public int dlid;
+        public int respcode;
+        public string respmsg;
+        public int usrid;
     }
 }
