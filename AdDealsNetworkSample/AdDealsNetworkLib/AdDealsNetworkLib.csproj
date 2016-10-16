@@ -40,6 +40,8 @@
     <Compile Include="Interefaces\IPlatformInfo.cs" />
     <Compile Include="Lib\AdDealsPopupAd.cs" />
     <Compile Include="Lib\AdManager.cs" />
+    <Compile Include="Lib\FileHelper.cs" />
+    <Compile Include="Interefaces\IFileHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

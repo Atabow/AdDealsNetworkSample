@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="CustomRenderers\HybridWebViewRenderer.cs" />
     <Compile Include="Helpers\AdvertisingIdHelper.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />

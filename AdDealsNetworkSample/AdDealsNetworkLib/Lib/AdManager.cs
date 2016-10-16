@@ -12,6 +12,7 @@
     {
         const string AppUriFormat = "http://adapi.addealsnetwork.com/addeals/rest/v2/campaigns/openapi?format=json&aid={0}&akey={1}&ctypeid={2}&advuid={3}&lang={4}&country={5}&usragent={6}&adsize={7}&testing={8}&duid={9}&conn={10}&mop={11}&usrid={12}";
         const string AppInitUriFormat = "http://adapi.addealsnetwork.com/addeals/tracking/add?advuid={0}&aid={1}&akey={2}&usragent={3}&oapiver=2&tech=xamarin";
+        const string AdDealsNetworkFile = "AdDealsNetwork.txt";
 
         public static event EventHandler InitSDKSuccess;
         public static event EventHandler InitSDKFailed;
@@ -30,6 +31,7 @@
         static string appkey = string.Empty;
         static int adDealsUserId = 0;
 
+        static FileHelper fileHelper = null;
         static IAdvertisingIdHelper advertisingIdHelper = null;
         static IPlatformInfo platformInfo = null;
         static HybridWebView hybridWebView = null;
@@ -39,6 +41,7 @@
             advertisingIdHelper = DependencyService.Get<IAdvertisingIdHelper>();
             platformInfo = DependencyService.Get<IPlatformInfo>();
             hybridWebView = new HybridWebView();
+            fileHelper = new FileHelper();
 
             advertisingIdHelper.GetAdvertisingId(AdManager.SetAdvertisingId);
             duid = WebUtility.UrlEncode(platformInfo.GetDeviceId());
@@ -160,6 +163,18 @@
 
         static async Task Initialize()
         {
+            string fileContent;
+            if (!sdkInitialized && await fileHelper.ExistsAsync(AdDealsNetworkFile))
+            {
+                fileContent = await fileHelper.ReadTextAsync(AdDealsNetworkFile);
+                if (!string.IsNullOrWhiteSpace(fileContent))
+                {
+                    AdDealsInstallContent adDealsInstallContent = JsonConvert.DeserializeObject<AdDealsInstallContent>(fileContent);
+                    adDealsUserId = adDealsInstallContent.usrid;
+                    sdkInitialized = true;
+                }
+            }
+
             if (!sdkInitialized && !string.IsNullOrEmpty(advertisingId) && !string.IsNullOrEmpty(userAgent))
             {
                 string appInitUri = string.Format(AppInitUriFormat, advertisingId, aid, appkey, userAgent);
@@ -176,6 +191,7 @@
                         {
                             AdDealsInstallContent adDealsInstallContent = JsonConvert.DeserializeObject<AdDealsInstallContent>(content);
                             adDealsUserId = adDealsInstallContent.usrid;
+                            await fileHelper.WriteTextAsync(AdDealsNetworkFile, content);
                         }
 
                         InitSDKSuccess?.Invoke(new object(), new EventArgs());

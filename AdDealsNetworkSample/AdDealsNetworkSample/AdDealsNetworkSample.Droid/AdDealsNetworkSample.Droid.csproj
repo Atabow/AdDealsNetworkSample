@@ -129,6 +129,7 @@
     <Compile Include="Helpers\AdvertisingIdHelper.cs" />
     <Compile Include="CustomRenderers\HybridWebViewRenderer.cs" />
     <Compile Include="CustomRenderers\JSBridge.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Helpers\PlatformInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

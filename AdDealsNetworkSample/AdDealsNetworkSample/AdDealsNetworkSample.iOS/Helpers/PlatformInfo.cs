@@ -1,6 +1,4 @@
 using AdDealsNetworkLib;
-using AdDealsNetworkSample;
-using System;
 using UIKit;
 using Xamarin.Forms;
 
