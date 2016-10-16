@@ -7,7 +7,7 @@ Integrate AdDealsNetworkLib to your Xamain.Forms applications.
 	b. "Contents" folder from AdDealsNetworkSample.UWP project.
 	c. "Helpers" folder from AdDealsNetworkSample.UWP project.
 	d. Add following code to App.xaml.cs
-		//Now, add in all the assemblies your app uses
+	//Now, add in all the assemblies your app uses
         List<Assembly> assembliesToInclude = new List<Assembly>();
         assembliesToInclude.Add(typeof(HybridWebViewRenderer).GetTypeInfo().Assembly);
         Xamarin.Forms.Forms.Init(e, assembliesToInclude);
@@ -17,6 +17,6 @@ Integrate AdDealsNetworkLib to your Xamain.Forms applications.
         Xamarin.Forms.DependencyService.Register<PlatformInfo>();
 3. To Droid project add
 	a. "Customer Renderers" folder from AdDealsNetworkSample.Droid project.
-	b. Add "Content" folder in Assets folder of from AdDealsNetworkSample.Droid project.
+	b. "Content" folder to Assets folder from AdDealsNetworkSample.Droid project.
 	c. "Helpers" folder from AdDealsNetworkSample.Droid project.
 
