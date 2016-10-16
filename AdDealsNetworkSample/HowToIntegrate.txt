@@ -7,7 +7,7 @@ Integrate AdDealsNetworkLib to your Xamain.Forms applications.
 	b. "Contents" folder from AdDealsNetworkSample.UWP project.
 	c. "Helpers" folder from AdDealsNetworkSample.UWP project.
 	d. Add following code to App.xaml.cs
-	//Now, add in all the assemblies your app uses
+		//Now, add in all the assemblies your app uses
         List<Assembly> assembliesToInclude = new List<Assembly>();
         assembliesToInclude.Add(typeof(HybridWebViewRenderer).GetTypeInfo().Assembly);
         Xamarin.Forms.Forms.Init(e, assembliesToInclude);
@@ -19,4 +19,20 @@ Integrate AdDealsNetworkLib to your Xamain.Forms applications.
 	a. "Customer Renderers" folder from AdDealsNetworkSample.Droid project.
 	b. "Content" folder to Assets folder from AdDealsNetworkSample.Droid project.
 	c. "Helpers" folder from AdDealsNetworkSample.Droid project.
+	
+4. Now in MainPage.xaml.cs add
+		const string DROIDAPPID = "<APPID>";
+        const string DROIDAPPKEY = "<APPKEY>";
 
+        const string IOSAPPID = "";
+        const string IOSAPPKEY = "";
+
+        const string WINAPPID = "<APPID>";
+        const string WINAPPKEY = "<APPKEY>";
+		
+		string appId = Device.OnPlatform(IOSAPPID, DROIDAPPID, WINAPPID);
+        string appKey = Device.OnPlatform(IOSAPPKEY, DROIDAPPKEY, WINAPPKEY);
+        AdManager.InitSDK(this.MainGrid, appId, appKey);
+		
+		Replace APPID and APPKEY with actual values from AdDealsPage.
+		Refer to the MainPage.xaml.cs sample's MainPage.xaml.cs.
